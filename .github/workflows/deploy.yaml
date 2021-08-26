@@ -1,0 +1,27 @@
+name: deploy to kubernetes
+ 
+on:
+ pull_request:
+   types: closed
+   branches:
+     - main
+ 
+jobs:
+ helm-deploy:      
+   name: Helm release
+   runs-on: ubuntu-latest
+ 
+   steps:
+     - uses: actions/checkout@v2
+
+     - name: set up helm install
+       uses: azure/setup-helm@v1
+       with:
+         version: v3.4.0
+
+     - name: helm deploy to kuberenetes cluster
+       uses: WyriHaximus/github-action-helm3@v2
+       with:
+         exec: helm upgrade --install nginx-git ./stable/nginx
+         kubeconfig: '${{ secrets.CONFIG }}'
+
