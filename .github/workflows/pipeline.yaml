@@ -1,0 +1,25 @@
+name: Validate the chart
+ 
+on:
+ push:
+   branches:
+     - '**'
+ pull_request:
+   branches: [ main ]
+ 
+jobs:
+ helm-lint:      
+   name: Helm lint
+   runs-on: ubuntu-latest
+ 
+   steps:
+     - uses: actions/checkout@v2
+
+     - name: set up helm
+       uses: azure/setup-helm@v1
+       with:
+         version: v3.4.0
+
+     - name: validate helm
+       run: helm lint stable/*
+    
