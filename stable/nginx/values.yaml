@@ -8,7 +8,7 @@ image:
   repository: nginx:latest
 
 service:
-  type: NodePort
+  type: Nodeport
   port: 80
 
 
